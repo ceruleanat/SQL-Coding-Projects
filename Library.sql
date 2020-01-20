@@ -7,8 +7,8 @@ CREATE TABLE Library_Branch (
 INSERT INTO Library_Branch
 	(BranchName, Address)
 	VALUES
-	('Beaverton', '1234 Burritos'),
-	('Troutdale', '4321 Taco Street'),
+	('Sharpstown', '1234 Burritos'),
+	('Central', '4321 Taco Street'),
 	('Westside', '1122 Mochi Lane'),
 	('Eastside', '2211 Boba Yum')
 ;
@@ -227,8 +227,8 @@ CREATE TABLE Book_Authors (
 INSERT INTO Book_Authors
 	(BookID, AuthorName)
 	VALUES
-	(100,'Jane Austen'),
-	(101,'Jane Austen'),
+	(100,'Stephen King'),
+	(101,'Stephen King'),
 	(102,'Jane Austen'),
 	(103,'Jane Austen'),
 	(104,'J. K. Rowling'),
@@ -265,7 +265,7 @@ INSERT INTO Book_Authors
 	(135,'Olivia Laing'),
 	(136,'Melissa Harrison'),
 	(137,'Muhammad Khan'),
-	(138,'Stephen King'),
+	(138,'James Clarke'),
 	(139,'James Clarke')
 ;
 
@@ -312,14 +312,14 @@ getNotRenting
  /*********************
 	PROCEDURE 4
  *********************/
-CREATE PROC beavertonDueToday
+CREATE PROC sharpsDueToday
  AS
 SELECT a1.Title, a2.Name, a2.Address
 FROM Books a1, Borrower a2, Book_Loans a3, Library_Branch a4
-WHERE a4.BranchName='Beaverton' AND a4.BranchId=a3.BranchId AND
+WHERE a4.BranchName='Sharpstown' AND a4.BranchId=a3.BranchId AND
 a3.DateDue='2019-12-30' AND a3.CardNo=a2.CardNo AND a3.BookId=a1.BookId
 
-beavertonDueToday
+sharpsDueToday
 
  /*********************
 	PROCEDURE 5
@@ -349,7 +349,7 @@ moreThanFive
 /*********************
 	PROCEDURE 7
  *********************/
-CREATE PROC ellmannAtTroutdale
+CREATE PROC kingAtCentral
 AS
 SELECT DISTINCT a1.Title, a2.Number_Of_Copies
 FROM Books a1
@@ -358,11 +358,11 @@ INNER JOIN Book_Authors a3 ON a1.BookID = a3.BookID
 INNER JOIN Book_Loans a4 ON a1.BookID = a4.BookID
 INNER JOIN Library_Branch a5 ON a4.BranchID = a5.BranchID
 WHERE
-a3.AuthorName = 'Lucy Ellmann'
+a3.AuthorName = 'Stephen King'
 AND
 a4.BranchID = 2
 
-ellmannAtTroutdale
+kingAtCentral
 
 /*****************************
    Selects and Procedures
@@ -378,7 +378,7 @@ SELECT * FROM Book_Authors
 getTribe
 copiesLT
 getNotRenting
-beavertonDueToday
+sharpsDueToday
 branchLoan
 moreThanFive
-ellmannAtTroutdale
+kingAtCentral
